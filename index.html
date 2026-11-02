@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fiziya Kausar Chuhe – SQL Server DBA</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef2f6;--surface:#fff;--ink:#10243a;--muted:#4d6076;--line:#cfd9e3;--accent:#0b7a7c;--accent-soft:#d6eeee;--warm:#b8741a;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1a29;--surface:#15263a;--ink:#e6eef6;--muted:#9bb0c5;--line:#273d55;--accent:#4fd1c5;--accent-soft:#12383d;--warm:#e6a853;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e1a29;--surface:#15263a;--ink:#e6eef6;--muted:#9bb0c5;--line:#273d55;--accent:#4fd1c5;--accent-soft:#12383d;--warm:#e6a853;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 "IBM Plex Sans",system-ui,sans-serif}
+h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.15;margin:0}
+a{color:var(--accent)}
+:focus-visible{outline:3px solid var(--warm);outline-offset:2px}
+.wrap{max-width:1000px;margin:0 auto;padding:0 24px}
+nav{display:flex;gap:20px;flex-wrap:wrap;padding:20px 0;font-size:15px}
+nav a{color:var(--muted);text-decoration:none}nav a:hover{color:var(--accent)}
+header.hero{padding:40px 0 56px}
+h1{font-size:clamp(40px,7vw,72px);font-weight:700;letter-spacing:-.02em}
+.role{font-size:clamp(20px,3vw,26px);color:var(--accent);margin:10px 0 18px;font-family:"Bricolage Grotesque",sans-serif;font-weight:500}
+.lead{max-width:62ch;color:var(--muted)}
+.facts{display:flex;gap:28px;flex-wrap:wrap;margin:28px 0 0;padding:0;list-style:none}
+.facts b{display:block;font:700 28px "Bricolage Grotesque",sans-serif;color:var(--ink)}
+.facts span{font-size:14px;color:var(--muted)}
+.pipe{margin-top:44px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 20px 14px}
+.pipe h2{font-size:18px;margin-bottom:4px}
+.pipe p{margin:0 0 14px;color:var(--muted);font-size:15px}
+.pipe svg{width:100%;height:auto;display:block;overflow:visible}
+.node{fill:var(--bg);stroke:var(--line);stroke-width:1.5}
+.node.hot{fill:var(--accent-soft);stroke:var(--accent)}
+.lbl{fill:var(--ink);font:500 14px "IBM Plex Sans",sans-serif;text-anchor:middle}
+.sub{fill:var(--muted);font:400 12px "IBM Plex Sans",sans-serif;text-anchor:middle}
+.flow{stroke:var(--accent);stroke-width:2;fill:none;stroke-dasharray:6 6;animation:dash 1.4s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-12}}
+@media (prefers-reduced-motion:reduce){.flow{animation:none}html{scroll-behavior:auto}}
+section{padding:48px 0;border-top:1px solid var(--line)}
+section>.wrap>h2{font-size:30px;margin-bottom:26px}
+.job{display:grid;grid-template-columns:200px 1fr;gap:8px 32px;margin-bottom:34px}
+.job .when{color:var(--muted);font-size:15px}
+.job h3{font-size:21px}
+.job .org{color:var(--accent);font-weight:500;margin-bottom:8px}
+ul.b{margin:8px 0 0;padding-left:20px}ul.b li{margin-bottom:6px}
+.proj{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:20px 22px;margin-bottom:16px}
+.proj h3{font-size:20px}.proj .t{color:var(--muted);font-size:15px;margin:2px 0 8px}
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px 36px}
+.skills h3{font-size:16px;margin-bottom:8px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chips span{background:var(--accent-soft);color:var(--ink);border-radius:999px;padding:3px 12px;font-size:14px}
+.edu{display:flex;gap:40px;flex-wrap:wrap}
+.edu h3{font-size:19px}.edu p{margin:2px 0;color:var(--muted)}
+footer{padding:48px 0 64px;border-top:1px solid var(--line)}
+footer h2{font-size:30px}
+.btn{display:inline-block;margin-top:16px;background:var(--accent);color:var(--bg);padding:12px 22px;border-radius:8px;text-decoration:none;font-weight:500}
+.mail{font:500 22px "Bricolage Grotesque",sans-serif;margin:18px 0 0;user-select:all;word-break:break-all}
+button.btn{border:0;font:inherit;font-weight:500;cursor:pointer;margin-right:16px}
+.alt{font-size:15px}.hint{min-height:1.6em;color:var(--muted);font-size:15px;margin:10px 0 0}
+.links{margin:-8px 0 18px;color:var(--muted);font-size:16px}
+@media (max-width:700px){.job{grid-template-columns:1fr}}
+@media print{nav,.btn{display:none}.flow{animation:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<nav aria-label="Sections"><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#skills">Skills</a><a href="#education">Education</a><a href="#contact">Contact</a></nav>
+<header class="hero">
+<h1>Fiziya Kausar Chuhe</h1>
+<p class="role">SQL Server Database Administrator</p>
+<p class="links">+91 99728 12057 · fiziyachuhe@gmail.com · <a href="https://www.linkedin.com/in/fiziya-chuhe-3582041b5/" target="_blank" rel="noopener">LinkedIn</a> · Bangalore, India</p>
+<p class="lead">I keep SQL Server databases available, fast and secure. I handle installation, backup and recovery, performance tuning, disaster recovery and access control for production systems on Linux and Windows. Before moving into database administration, I worked as a data engineer at NTT DATA, which gives me a strong grounding in ETL, AWS and SQL.</p>
+<ul class="facts">
+<li><b>2012+</b><span>SQL Server versions managed</span></li>
+<li><b>DR and HA</b><span>procedures for critical systems</span></li>
+<li><b>Since 2021</b><span>in data and database roles</span></li>
+</ul>
+<div class="pipe">
+<h2>My routine for a healthy SQL Server</h2>
+<p>Four checks I run to keep production databases dependable.</p>
+<svg viewBox="0 0 800 130" role="img" aria-label="Routine: monitor, tune, back up and recover, secure">
+<g><rect class="node hot" x="10" y="30" width="150" height="64" rx="10"/><text class="lbl" x="85" y="59">Monitor</text><text class="sub" x="85" y="78">native tools, CloudWatch</text></g>
+<g><rect class="node hot" x="220" y="30" width="150" height="64" rx="10"/><text class="lbl" x="295" y="59">Tune</text><text class="sub" x="295" y="78">queries, indexes, config</text></g>
+<g><rect class="node hot" x="430" y="30" width="150" height="64" rx="10"/><text class="lbl" x="505" y="59">Back up and recover</text><text class="sub" x="505" y="78">backups, DR drills</text></g>
+<g><rect class="node hot" x="640" y="30" width="150" height="64" rx="10"/><text class="lbl" x="715" y="59">Secure</text><text class="sub" x="715" y="78">access, permission audits</text></g>
+<path class="flow" d="M160 62H220"/><path class="flow" d="M370 62H430"/><path class="flow" d="M580 62H640"/>
+</svg>
+</div>
+</header>
+</div>
+
+<section id="experience"><div class="wrap"><h2>Experience</h2>
+<div class="job"><div class="when">May 2025 – Present<br>Bangalore, India</div><div>
+<h3>SQL Server Database Administrator</h3><div class="org">NTT DATA</div>
+<ul class="b">
+<li>Administer SQL Server databases: configuration, backup and recovery, and performance tuning.</li>
+<li>Monitor database health, tune queries and server settings, and keep critical systems highly available.</li>
+<li>Manage access controls and permission audits, and follow ITIL for incidents and changes.</li>
+</ul></div></div>
+<div class="job"><div class="when">July 2024 – April 2025<br>Mumbai, India</div><div>
+<h3>Data Engineer</h3><div class="org">Corevision Technology</div>
+<ul class="b">
+<li>Managed SQL Server (2012+): installation, configuration, backup and recovery, and performance tuning.</li>
+<li>Ran disaster-recovery procedures and kept critical systems highly available.</li>
+<li>Automated re-indexing and integrity checks with SQL scripts and batch jobs.</li>
+<li>Monitored database health with native tools and CloudWatch, and optimized queries and server configuration.</li>
+<li>Handled access controls, permission audits and security compliance.</li>
+<li>Worked with application teams and system administrators to resolve database issues across Linux and Windows.</li>
+<li>Tracked incidents and changes in JIRA and GitHub, following ITIL practices.</li>
+</ul></div></div>
+<div class="job"><div class="when">November 2021 – July 2024<br>Bangalore, India</div><div>
+<h3>Data Engineer</h3><div class="org">NTT DATA</div>
+<ul class="b">
+<li>Monitored production ETL pipelines and fixed failures and data discrepancies, so data was ready on time for business reporting.</li>
+<li>Scheduled and managed ETL in SQL Server Integration Services (SSIS) and Informatica Intelligent Cloud Services (IICS).</li>
+<li>Led the migration of large datasets from on-premises Hadoop to AWS S3 for the Santander DAS Programme.</li>
+</ul></div></div>
+</div></section>
+
+<section id="projects"><div class="wrap"><h2>Projects</h2>
+<article class="proj"><h3>Production SQL Server operations</h3><div class="t">Data Engineer · Corevision Technology</div>
+<ul class="b">
+<li>Scheduled maintenance jobs for re-indexing and integrity checks, replacing manual runs.</li>
+<li>Set up backup, recovery and disaster-recovery procedures for critical systems.</li>
+<li>Audited permissions and access controls to meet security compliance.</li>
+</ul></article>
+<article class="proj"><h3>Santander DAS Programme</h3><div class="t">Earlier data engineering work · NTT DATA</div>
+<ul class="b">
+<li>Led the migration of large datasets from on-premises Hadoop to AWS S3.</li>
+<li>Wrote scripts to export data from HDFS to Amazon Aurora, with validation steps.</li>
+<li>Used AWS Glue for transformation, crawler configuration and job management.</li>
+<li>Processed high-volume data in batches and cleaned up resources after migration.</li>
+<li>Built Hive tables and queried structured data with Spark SQL.</li>
+</ul></article>
+</div></section>
+
+<section id="skills"><div class="wrap"><h2>Skills</h2>
+<div class="skills">
+<div><h3>SQL Server administration</h3><div class="chips"><span>Installation</span><span>Configuration</span><span>Backup and recovery</span><span>Disaster recovery</span><span>High availability</span><span>Performance tuning</span></div></div>
+<div><h3>Maintenance and automation</h3><div class="chips"><span>T-SQL</span><span>Re-indexing</span><span>Integrity checks</span><span>Batch jobs</span><span>Bash</span><span>Python</span></div></div>
+<div><h3>Security and compliance</h3><div class="chips"><span>Access control</span><span>Permission audits</span><span>ITIL</span><span>Incident and change management</span></div></div>
+<div><h3>Monitoring and platforms</h3><div class="chips"><span>Native SQL Server tools</span><span>AWS CloudWatch</span><span>AWS RDS, EC2, IAM</span><span>Linux</span><span>Windows</span></div></div>
+<div><h3>Other databases</h3><div class="chips"><span>Oracle</span><span>PostgreSQL</span></div></div>
+<div><h3>Data engineering background</h3><div class="chips"><span>SSIS</span><span>IICS</span><span>Airflow</span><span>AWS Glue</span><span>Azure Data Factory</span><span>Hadoop, Hive, Spark</span></div></div>
+<div><h3>Tools</h3><div class="chips"><span>JIRA</span><span>GitHub</span><span>GitLab</span><span>Azure DevOps</span><span>Confluence</span></div></div>
+</div></div></section>
+
+<section id="education"><div class="wrap"><h2>Education</h2>
+<div class="edu">
+<div><h3>Master of Computer Applications</h3><p>Chandigarh University, Chandigarh</p><p>Graduated May 2024</p></div>
+<div><h3>Bachelor of Science</h3><p>KLE University, Belgaum</p><p>Graduated May 2021</p></div>
+</div></div></section>
+
+<footer id="contact"><div class="wrap">
+<h2>Need a dependable SQL Server team member?</h2>
+<p class="lead">Based in India. Open to SQL Server DBA roles.</p>
+<p class="mail"><span id="em">fiziyachuhe@gmail.com</span></p>
+<p class="links">Phone: +91 99728 12057<br><a href="https://www.linkedin.com/in/fiziya-chuhe-3582041b5/" target="_blank" rel="noopener">linkedin.com/in/fiziya-chuhe-3582041b5</a></p>
+<button class="btn" id="cp" type="button">Copy email address</button>
+<a class="alt" href="mailto:fiziyachuhe@gmail.com" target="_blank" rel="noopener">Open in mail app</a>
+<p class="hint" id="msg" role="status"></p>
+</div></footer>
+<script>
+(function(){
+var b=document.getElementById('cp'),m=document.getElementById('msg'),t=document.getElementById('em');
+function done(ok){m.textContent=ok?'Email address copied.':'Press and hold the address above to copy it.';}
+b.addEventListener('click',function(){
+var a='fiziyachuhe@gmail.com';
+if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(a).then(function(){done(true)},fallback);}else{fallback();}
+function fallback(){try{var r=document.createRange();r.selectNodeContents(t);var s=window.getSelection();s.removeAllRanges();s.addRange(r);done(document.execCommand('copy'));}catch(e){done(false);}}
+});
+})();
+</script>
+</body>
+</html>
