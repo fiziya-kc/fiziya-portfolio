@@ -3,201 +3,380 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Fiziya Kausar Chuhe – SQL Server DBA</title>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<title>Fiziya Kausar Chuhe – SQL Server DBA · Data Analyst · AI Explorer</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;700;800&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#eef2f6;--surface:#fff;--ink:#10243a;--muted:#4d6076;--line:#cfd9e3;--accent:#0b7a7c;--accent-soft:#d6eeee;--warm:#b8741a;
-box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1a29;--surface:#15263a;--ink:#e6eef6;--muted:#9bb0c5;--line:#273d55;--accent:#4fd1c5;--accent-soft:#12383d;--warm:#e6a853;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0e1a29;--surface:#15263a;--ink:#e6eef6;--muted:#9bb0c5;--line:#273d55;--accent:#4fd1c5;--accent-soft:#12383d;--warm:#e6a853;color-scheme:dark}
-html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+:root{
+  --bg:#0b1626;--bg2:#0e1c31;--surface:#13253d;--surface2:#182e4d;
+  --ink:#eaf3fc;--muted:#9db3ca;--line:#27405e;
+  --teal:#4fd1c5;--teal-soft:rgba(79,209,197,.14);
+  --violet:#a78bfa;--violet-soft:rgba(167,139,250,.14);
+  --amber:#f6b352;--amber-soft:rgba(246,179,82,.14);
+  --glow:0 0 40px rgba(79,209,197,.25);
+  color-scheme:dark;
+}
+:root[data-theme="light"]{
+  --bg:#eef3f8;--bg2:#e4ecf4;--surface:#ffffff;--surface2:#f3f7fb;
+  --ink:#10243a;--muted:#4d6076;--line:#cfd9e3;
+  --teal:#0b7a7c;--teal-soft:rgba(11,122,124,.1);
+  --violet:#6d4fc4;--violet-soft:rgba(109,79,196,.1);
+  --amber:#b8741a;--amber-soft:rgba(184,116,26,.1);
+  --glow:0 0 40px rgba(11,122,124,.15);
+}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 "IBM Plex Sans",system-ui,sans-serif}
+html{scroll-behavior:smooth;scroll-padding-top:20px}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.6 "IBM Plex Sans",system-ui,sans-serif;overflow-x:hidden}
 h1,h2,h3{font-family:"Bricolage Grotesque",system-ui,sans-serif;line-height:1.15;margin:0}
-a{color:var(--accent)}
-:focus-visible{outline:3px solid var(--warm);outline-offset:2px}
-.wrap{max-width:1000px;margin:0 auto;padding:0 24px}
-nav{display:flex;gap:20px;flex-wrap:wrap;padding:20px 0;font-size:15px}
-nav a{color:var(--muted);text-decoration:none}nav a:hover{color:var(--accent)}
-header.hero{padding:40px 0 56px}
-h1{font-size:clamp(40px,7vw,72px);font-weight:700;letter-spacing:-.02em}
-.role{font-size:clamp(20px,3vw,26px);color:var(--accent);margin:10px 0 18px;font-family:"Bricolage Grotesque",sans-serif;font-weight:500}
-.lead{max-width:62ch;color:var(--muted)}
-.facts{display:flex;gap:28px;flex-wrap:wrap;margin:28px 0 0;padding:0;list-style:none}
-.facts b{display:block;font:700 28px "Bricolage Grotesque",sans-serif;color:var(--ink)}
-.facts span{font-size:14px;color:var(--muted)}
-.pipe{margin-top:44px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:22px 20px 14px}
-.pipe h2{font-size:18px;margin-bottom:4px}
-.pipe p{margin:0 0 14px;color:var(--muted);font-size:15px}
-.pipe svg{width:100%;height:auto;display:block;overflow:visible}
-.node{fill:var(--bg);stroke:var(--line);stroke-width:1.5}
-.node.hot{fill:var(--accent-soft);stroke:var(--accent)}
-.lbl{fill:var(--ink);font:500 14px "IBM Plex Sans",sans-serif;text-anchor:middle}
-.sub{fill:var(--muted);font:400 12px "IBM Plex Sans",sans-serif;text-anchor:middle}
-.flow{stroke:var(--accent);stroke-width:2;fill:none;stroke-dasharray:6 6;animation:dash 1.4s linear infinite}
-@keyframes dash{to{stroke-dashoffset:-12}}
-@media (prefers-reduced-motion:reduce){.flow{animation:none}html{scroll-behavior:auto}}
-section{padding:48px 0;border-top:1px solid var(--line)}
-section>.wrap>h2{font-size:30px;margin-bottom:26px}
+a{color:var(--teal)}
+:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* ---------- animated background depth layers ---------- */
+.bg-orbs{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
+.orb{position:absolute;border-radius:50%;filter:blur(90px);opacity:.55;will-change:transform}
+.orb.o1{width:520px;height:520px;background:radial-gradient(circle,var(--teal),transparent 70%);top:-140px;left:-120px;animation:drift1 26s ease-in-out infinite alternate}
+.orb.o2{width:460px;height:460px;background:radial-gradient(circle,var(--violet),transparent 70%);top:30%;right:-160px;animation:drift2 32s ease-in-out infinite alternate}
+.orb.o3{width:380px;height:380px;background:radial-gradient(circle,var(--amber),transparent 70%);bottom:-120px;left:30%;animation:drift3 28s ease-in-out infinite alternate}
+@keyframes drift1{to{transform:translate(90px,60px) scale(1.15)}}
+@keyframes drift2{to{transform:translate(-70px,-90px) scale(1.1)}}
+@keyframes drift3{to{transform:translate(60px,-70px) scale(1.2)}}
+.grid-floor{position:fixed;left:0;right:0;bottom:0;height:38vh;z-index:-1;pointer-events:none;
+  background:linear-gradient(to top,transparent 30%,var(--bg));
+  perspective:340px;overflow:hidden;opacity:.5}
+.grid-floor::before{content:"";position:absolute;left:-50%;right:-50%;bottom:-60%;height:120%;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:56px 56px;transform:rotateX(62deg);transform-origin:bottom;
+  -webkit-mask-image:linear-gradient(to top,black,transparent 80%);mask-image:linear-gradient(to top,black,transparent 80%)}
+
+nav{display:flex;gap:22px;flex-wrap:wrap;padding:22px 0;font-size:15px;position:relative;z-index:2}
+nav a{color:var(--muted);text-decoration:none;transition:color .2s}
+nav a:hover{color:var(--teal)}
+
+/* ---------- hero ---------- */
+header.hero{padding:34px 0 40px;display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.hero-copy{transform-style:preserve-3d}
+h1{font-size:clamp(40px,6.5vw,68px);font-weight:800;letter-spacing:-.02em}
+.role{font-size:clamp(19px,2.6vw,25px);margin:12px 0 18px;font-family:"Bricolage Grotesque",sans-serif;font-weight:500}
+.role .r{color:var(--teal)}.role .r2{color:var(--violet)}.role .r3{color:var(--amber)}
+.lead{max-width:60ch;color:var(--muted)}
+.facts{display:flex;gap:16px;flex-wrap:wrap;margin:26px 0 0;padding:0;list-style:none}
+.facts li{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 18px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+.facts b{display:block;font:700 22px "Bricolage Grotesque",sans-serif}
+.facts span{font-size:13px;color:var(--muted)}
+
+/* 3D hero scene */
+.scene{perspective:900px;height:340px;position:relative}
+.cube{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .15s ease-out}
+.float-card{position:absolute;width:220px;padding:18px 20px;border-radius:16px;border:1px solid var(--line);
+  background:linear-gradient(145deg,var(--surface2),var(--surface));box-shadow:0 24px 50px rgba(0,0,0,.4);
+  transform-style:preserve-3d;animation:bob 7s ease-in-out infinite}
+.float-card h3{font-size:19px;display:flex;align-items:center;gap:9px}
+.float-card p{margin:6px 0 0;font-size:13.5px;color:var(--muted);line-height:1.45}
+.fc-dba{top:12px;left:6%;z-index:3;animation-delay:0s}
+.fc-data{top:104px;left:32%;z-index:2;animation-delay:1.2s}
+.fc-ai{top:196px;left:58%;z-index:1;animation-delay:2.4s}
+.fc-dba h3{color:var(--teal)}.fc-data h3{color:var(--violet)}.fc-ai h3{color:var(--amber)}
+.dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.fc-dba .dot{background:var(--teal);box-shadow:0 0 12px var(--teal)}
+.fc-data .dot{background:var(--violet);box-shadow:0 0 12px var(--violet)}
+.fc-ai .dot{background:var(--amber);box-shadow:0 0 12px var(--amber)}
+@keyframes bob{0%,100%{transform:translateZ(0) translateY(0)}50%{transform:translateZ(40px) translateY(-10px)}}
+
+/* ---------- sections ---------- */
+section{padding:56px 0;border-top:1px solid var(--line)}
+section>.wrap>h2{font-size:clamp(26px,3.6vw,34px);margin-bottom:8px}
+section>.wrap>.sub{color:var(--muted);margin:0 0 30px;max-width:70ch}
+.kicker{font:600 13px "IBM Plex Sans",sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--teal);display:block;margin-bottom:6px}
+
+/* role pillar cards */
+.pillars{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;perspective:1200px}
+.pillar{background:linear-gradient(160deg,var(--surface2),var(--surface));border:1px solid var(--line);border-radius:18px;
+  padding:26px 24px;transform-style:preserve-3d;transition:box-shadow .25s;position:relative;overflow:hidden}
+.pillar::before{content:"";position:absolute;inset:0;border-radius:inherit;opacity:.5;pointer-events:none;
+  background:radial-gradient(420px 200px at 20% -10%,var(--pc),transparent 70%)}
+.pillar.p-dba{--pc:var(--teal-soft)}.pillar.p-data{--pc:var(--violet-soft)}.pillar.p-ai{--pc:var(--amber-soft)}
+.pillar:hover{box-shadow:0 30px 60px rgba(0,0,0,.45),var(--glow)}
+.pillar .icon{font-size:30px;transform:translateZ(30px)}
+.pillar h3{font-size:21px;margin:10px 0 8px;transform:translateZ(24px)}
+.pillar h3.c-dba{color:var(--teal)}.pillar h3.c-data{color:var(--violet)}.pillar h3.c-ai{color:var(--amber)}
+.pillar ul{margin:0;padding-left:18px;color:var(--muted);font-size:15px;transform:translateZ(16px)}
+.pillar ul li{margin-bottom:6px}
+
+/* experience */
 .job{display:grid;grid-template-columns:200px 1fr;gap:8px 32px;margin-bottom:34px}
 .job .when{color:var(--muted);font-size:15px}
 .job h3{font-size:21px}
-.job .org{color:var(--accent);font-weight:500;margin-bottom:8px}
+.job .org{color:var(--teal);font-weight:500;margin-bottom:8px}
 ul.b{margin:8px 0 0;padding-left:20px}ul.b li{margin-bottom:6px}
-.proj{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:8px;padding:20px 22px;margin-bottom:16px}
-.proj h3{font-size:20px}.proj .t{color:var(--muted);font-size:15px;margin:2px 0 8px}
-.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px 36px}
-.skills h3{font-size:16px;margin-bottom:8px}
+
+/* work projects */
+.proj{background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--teal);border-radius:12px;padding:20px 22px;margin-bottom:16px}
+
+/* GitHub projects: filter chips + 3D tilt cards */
+.filters{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:26px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--muted);border-radius:999px;
+  padding:7px 16px;font:500 14px "IBM Plex Sans",sans-serif;cursor:pointer;transition:all .2s}
+.chip:hover{color:var(--ink);border-color:var(--teal)}
+.chip.on{background:var(--teal);border-color:var(--teal);color:var(--bg)}
+.repos{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;perspective:1400px}
+.repo{background:linear-gradient(160deg,var(--surface2),var(--surface));border:1px solid var(--line);border-radius:16px;
+  padding:18px 20px;transform-style:preserve-3d;transition:box-shadow .25s,opacity .25s;position:relative}
+.repo:hover{box-shadow:0 28px 56px rgba(0,0,0,.45)}
+.repo.hide{display:none}
+.repo h3{font-size:17px;margin-bottom:4px;transform:translateZ(26px)}
+.repo h3 a{color:var(--ink);text-decoration:none}
+.repo h3 a:hover{color:var(--teal);text-decoration:underline}
+.repo p{margin:0;color:var(--muted);font-size:14.5px;transform:translateZ(14px)}
+.repo .meta{display:flex;align-items:center;justify-content:space-between;margin-top:12px;transform:translateZ(18px)}
+.tag{border-radius:999px;padding:2px 11px;font-size:12.5px;font-weight:500}
+.tag.t-dba{background:var(--teal-soft);color:var(--teal)}
+.tag.t-data{background:var(--violet-soft);color:var(--violet)}
+.tag.t-ai{background:var(--amber-soft);color:var(--amber)}
+.tag.t-web{background:rgba(120,160,220,.15);color:#7fb0e8}
+.repo .code{margin:0;font-size:13.5px}
+.repo .code a{text-decoration:none;color:var(--muted)}
+.repo .code a:hover{color:var(--teal);text-decoration:underline}
+
+/* skills */
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:24px 36px}
+.skills h3{font-size:16px;margin-bottom:10px}
+.skills h3.c-dba{color:var(--teal)}.skills h3.c-data{color:var(--violet)}.skills h3.c-ai{color:var(--amber)}.skills h3.c-gen{color:var(--ink)}
 .chips{display:flex;flex-wrap:wrap;gap:6px}
-.chips span{background:var(--accent-soft);color:var(--ink);border-radius:999px;padding:3px 12px;font-size:14px}
-.edu{display:flex;gap:40px;flex-wrap:wrap}
+.chips span{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:999px;padding:3px 12px;font-size:14px}
+
+/* education + contact */
+.edu{display:flex;gap:44px;flex-wrap:wrap}
 .edu h3{font-size:19px}.edu p{margin:2px 0;color:var(--muted)}
-footer{padding:48px 0 64px;border-top:1px solid var(--line)}
-footer h2{font-size:30px}
-.btn{display:inline-block;margin-top:16px;background:var(--accent);color:var(--bg);padding:12px 22px;border-radius:8px;text-decoration:none;font-weight:500}
+footer{padding:56px 0 72px;border-top:1px solid var(--line)}
+footer h2{font-size:clamp(26px,3.6vw,34px)}
+.btn{display:inline-block;margin-top:18px;background:var(--teal);color:var(--bg);padding:12px 24px;border-radius:10px;
+  text-decoration:none;font-weight:500;box-shadow:0 12px 28px rgba(0,0,0,.35);transition:transform .2s,box-shadow .2s}
+.btn:hover{transform:translateY(-3px);box-shadow:0 18px 36px rgba(0,0,0,.45)}
 .mail{font:500 22px "Bricolage Grotesque",sans-serif;margin:18px 0 0;user-select:all;word-break:break-all}
 button.btn{border:0;font:inherit;font-weight:500;cursor:pointer;margin-right:16px}
 .alt{font-size:15px}.hint{min-height:1.6em;color:var(--muted);font-size:15px;margin:10px 0 0}
-.links{margin:-8px 0 18px;color:var(--muted);font-size:16px}
-.repos{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px}
-.repo{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px 18px}
-.repo h3{font-size:17px;margin-bottom:4px}
-.repo h3 a{color:var(--ink);text-decoration:none}
-.repo h3 a:hover{color:var(--accent);text-decoration:underline}
-.repo p{margin:0;color:var(--muted);font-size:15px}
-.repo .lang{display:inline-block;margin-top:8px;background:var(--accent-soft);color:var(--ink);border-radius:999px;padding:2px 10px;font-size:13px}
-.repo .code{margin:8px 0 0;font-size:14px}.repo .code a{text-decoration:none}.repo .code a:hover{text-decoration:underline}
-@media (max-width:700px){.job{grid-template-columns:1fr}}
-@media print{nav,.btn{display:none}.flow{animation:none}}
+.links{margin:0 0 18px;color:var(--muted);font-size:16px}
+
+@media (max-width:900px){
+  header.hero{grid-template-columns:1fr;gap:26px}
+  .scene{height:320px;perspective:700px}
+  .fc-data{left:20%}.fc-ai{left:34%}
+}
+@media (max-width:700px){
+  .job{grid-template-columns:1fr}
+  .float-card{width:190px}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .orb,.float-card,.grid-floor::before{animation:none}
+  .cube{transition:none}
+}
+@media print{nav,.btn,.grid-floor,.bg-orbs{display:none}}
 </style>
 </head>
 <body>
+<div class="bg-orbs" aria-hidden="true"><div class="orb o1"></div><div class="orb o2"></div><div class="orb o3"></div></div>
+<div class="grid-floor" aria-hidden="true"></div>
+
 <div class="wrap">
-<nav aria-label="Sections"><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#github">GitHub</a><a href="#skills">Skills</a><a href="#education">Education</a><a href="#contact">Contact</a></nav>
+<nav aria-label="Sections"><a href="#roles">What I do</a><a href="#experience">Experience</a><a href="#projects">Projects</a><a href="#github">GitHub</a><a href="#skills">Skills</a><a href="#education">Education</a><a href="#contact">Contact</a></nav>
+
 <header class="hero">
-<h1>Fiziya Kausar Chuhe</h1>
-<p class="role">SQL Server Database Administrator</p>
-<p class="links">+91 99728 12057 · fiziyachuhe@gmail.com · <a href="https://www.linkedin.com/in/fiziya-chuhe-3582041b5/" target="_blank" rel="noopener">LinkedIn</a> · Bangalore, India</p>
-<p class="lead">I keep SQL Server databases available, fast and secure. I handle installation, backup and recovery, performance tuning, disaster recovery and access control for production systems on Linux and Windows. Before moving into database administration, I worked as a data engineer at NTT DATA, which gives me a strong grounding in ETL, AWS and SQL.</p>
-<ul class="facts">
-<li><b>2012+</b><span>SQL Server versions managed</span></li>
-<li><b>DR and HA</b><span>procedures for critical systems</span></li>
-<li><b>Since 2021</b><span>in data and database roles</span></li>
-</ul>
-<div class="pipe">
-<h2>My routine for a healthy SQL Server</h2>
-<p>Four checks I run to keep production databases dependable.</p>
-<svg viewBox="0 0 800 130" role="img" aria-label="Routine: monitor, tune, back up and recover, secure">
-<g><rect class="node hot" x="10" y="30" width="150" height="64" rx="10"/><text class="lbl" x="85" y="59">Monitor</text><text class="sub" x="85" y="78">native tools, CloudWatch</text></g>
-<g><rect class="node hot" x="220" y="30" width="150" height="64" rx="10"/><text class="lbl" x="295" y="59">Tune</text><text class="sub" x="295" y="78">queries, indexes, config</text></g>
-<g><rect class="node hot" x="430" y="30" width="150" height="64" rx="10"/><text class="lbl" x="505" y="59">Back up and recover</text><text class="sub" x="505" y="78">backups, DR drills</text></g>
-<g><rect class="node hot" x="640" y="30" width="150" height="64" rx="10"/><text class="lbl" x="715" y="59">Secure</text><text class="sub" x="715" y="78">access, permission audits</text></g>
-<path class="flow" d="M160 62H220"/><path class="flow" d="M370 62H430"/><path class="flow" d="M580 62H640"/>
-</svg>
-</div>
+  <div class="hero-copy" data-tilt-soft>
+    <h1>Fiziya Kausar Chuhe</h1>
+    <p class="role"><span class="r">SQL Server DBA</span> <span style="color:var(--muted)">×</span> <span class="r2">Data Analyst</span> <span style="color:var(--muted)">×</span> <span class="r3">AI Explorer</span></p>
+    <p class="lead">I keep SQL Server databases available, fast and secure — and I speak data end to end: from ETL pipelines and Power BI dashboards to Python analytics and machine learning. Currently going deeper into AI, because the next great DBA is one who understands what the models need.</p>
+    <ul class="facts">
+      <li><b>3</b><span>domains I work across</span></li>
+      <li><b>2012+</b><span>SQL Server versions managed</span></li>
+      <li><b>Since 2021</b><span>in data &amp; database roles</span></li>
+    </ul>
+  </div>
+  <div class="scene" aria-hidden="true">
+    <div class="cube" id="cube">
+      <div class="float-card fc-dba"><h3><span class="dot"></span>DBA</h3><p>Production SQL Server — availability, tuning, DR, security.</p></div>
+      <div class="float-card fc-data"><h3><span class="dot"></span>Data Analytics</h3><p>ETL, Python, dashboards — raw data turned into answers.</p></div>
+      <div class="float-card fc-ai"><h3><span class="dot"></span>AI &amp; ML</h3><p>Exploring ML models and AI-assisted workflows.</p></div>
+    </div>
+  </div>
 </header>
 </div>
 
-<section id="experience"><div class="wrap"><h2>Experience</h2>
-<div class="job"><div class="when">May 2025 – Present<br>Bangalore, India</div><div>
-<h3>SQL Server Database Administrator</h3><div class="org">NTT DATA</div>
-<ul class="b">
-<li>Administer SQL Server databases: configuration, backup and recovery, and performance tuning.</li>
-<li>Monitor database health, tune queries and server settings, and keep critical systems highly available.</li>
-<li>Manage access controls and permission audits, and follow ITIL for incidents and changes.</li>
-</ul></div></div>
-<div class="job"><div class="when">July 2024 – April 2025<br>Mumbai, India</div><div>
-<h3>Data Engineer</h3><div class="org">Corevision Technology</div>
-<ul class="b">
-<li>Managed SQL Server (2012+): installation, configuration, backup and recovery, and performance tuning.</li>
-<li>Ran disaster-recovery procedures and kept critical systems highly available.</li>
-<li>Automated re-indexing and integrity checks with SQL scripts and batch jobs.</li>
-<li>Monitored database health with native tools and CloudWatch, and optimized queries and server configuration.</li>
-<li>Handled access controls, permission audits and security compliance.</li>
-<li>Worked with application teams and system administrators to resolve database issues across Linux and Windows.</li>
-<li>Tracked incidents and changes in JIRA and GitHub, following ITIL practices.</li>
-</ul></div></div>
-<div class="job"><div class="when">November 2021 – July 2024<br>Bangalore, India</div><div>
-<h3>Data Engineer</h3><div class="org">NTT DATA</div>
-<ul class="b">
-<li>Monitored production ETL pipelines and fixed failures and data discrepancies, so data was ready on time for business reporting.</li>
-<li>Scheduled and managed ETL in SQL Server Integration Services (SSIS) and Informatica Intelligent Cloud Services (IICS).</li>
-<li>Led the migration of large datasets from on-premises Hadoop to AWS S3 for the Santander DAS Programme.</li>
-</ul></div></div>
+<section id="roles"><div class="wrap">
+  <span class="kicker">How I work</span>
+  <h2>One engineer, three dimensions</h2>
+  <p class="sub">Most people pick a lane. My career runs across three that feed each other — and every project below is tagged by where it lives.</p>
+  <div class="pillars">
+    <article class="pillar p-dba" data-tilt><div class="icon">🗄️</div><h3 class="c-dba">Database Administration</h3>
+      <ul><li>Installation, configuration, backup &amp; recovery</li><li>Performance tuning, HA and disaster recovery</li><li>Access control, permission audits, ITIL discipline</li></ul></article>
+    <article class="pillar p-data" data-tilt><div class="icon">📊</div><h3 class="c-data">Data Analytics &amp; Engineering</h3>
+      <ul><li>ETL pipelines in SSIS, IICS, Airflow, AWS Glue</li><li>Python analysis, NumPy/Pandas, visualization</li><li>Dashboards and reporting with Power BI</li></ul></article>
+    <article class="pillar p-ai" data-tilt><div class="icon">🤖</div><h3 class="c-ai">AI &amp; Machine Learning</h3>
+      <ul><li>ML and data-analytics learning track in Python</li><li>AI-assisted tooling and automation experiments</li><li>Bridging data platforms with what models need</li></ul></article>
+  </div>
 </div></section>
 
-<section id="projects"><div class="wrap"><h2>Projects</h2>
-<article class="proj"><h3>Production SQL Server operations</h3><div class="t">Data Engineer · Corevision Technology</div>
-<ul class="b">
-<li>Scheduled maintenance jobs for re-indexing and integrity checks, replacing manual runs.</li>
-<li>Set up backup, recovery and disaster-recovery procedures for critical systems.</li>
-<li>Audited permissions and access controls to meet security compliance.</li>
-</ul></article>
-<article class="proj"><h3>Santander DAS Programme</h3><div class="t">Earlier data engineering work · NTT DATA</div>
-<ul class="b">
-<li>Led the migration of large datasets from on-premises Hadoop to AWS S3.</li>
-<li>Wrote scripts to export data from HDFS to Amazon Aurora, with validation steps.</li>
-<li>Used AWS Glue for transformation, crawler configuration and job management.</li>
-<li>Processed high-volume data in batches and cleaned up resources after migration.</li>
-<li>Built Hive tables and queried structured data with Spark SQL.</li>
-</ul></article>
+<section id="experience"><div class="wrap">
+  <span class="kicker">Where I've done it</span>
+  <h2>Experience</h2>
+  <div class="job"><div class="when">May 2025 – Present<br>Bangalore, India</div><div>
+  <h3>SQL Server Database Administrator</h3><div class="org">NTT DATA</div>
+  <ul class="b">
+  <li>Administer SQL Server databases: configuration, backup and recovery, and performance tuning.</li>
+  <li>Monitor database health, tune queries and server settings, and keep critical systems highly available.</li>
+  <li>Manage access controls and permission audits, and follow ITIL for incidents and changes.</li>
+  </ul></div></div>
+  <div class="job"><div class="when">July 2024 – April 2025<br>Mumbai, India</div><div>
+  <h3>Data Engineer</h3><div class="org">Corevision Technology</div>
+  <ul class="b">
+  <li>Managed SQL Server (2012+): installation, configuration, backup and recovery, and performance tuning.</li>
+  <li>Ran disaster-recovery procedures and kept critical systems highly available.</li>
+  <li>Automated re-indexing and integrity checks with SQL scripts and batch jobs.</li>
+  <li>Monitored database health with native tools and CloudWatch, and optimized queries and server configuration.</li>
+  <li>Handled access controls, permission audits and security compliance.</li>
+  <li>Worked with application teams and system administrators to resolve database issues across Linux and Windows.</li>
+  <li>Tracked incidents and changes in JIRA and GitHub, following ITIL practices.</li>
+  </ul></div></div>
+  <div class="job"><div class="when">November 2021 – July 2024<br>Bangalore, India</div><div>
+  <h3>Data Engineer</h3><div class="org">NTT DATA</div>
+  <ul class="b">
+  <li>Monitored production ETL pipelines and fixed failures and data discrepancies, so data was ready on time for business reporting.</li>
+  <li>Scheduled and managed ETL in SQL Server Integration Services (SSIS) and Informatica Intelligent Cloud Services (IICS).</li>
+  <li>Led the migration of large datasets from on-premises Hadoop to AWS S3 for the Santander DAS Programme.</li>
+  </ul></div></div>
 </div></section>
 
-<section id="github"><div class="wrap"><h2>GitHub Projects</h2>
-<p class="lead" style="margin:0 0 26px">Everything I've been building and learning — straight from my <a href="https://github.com/fiziya-kc" target="_blank" rel="noopener">GitHub</a>.</p>
-<div class="repos">
-<div class="repo"><h3><a href="https://fiziya-kc.github.io/SQL-DBA-Learning/" target="_blank" rel="noopener">SQL-DBA-Learning</a></h3><p>A comprehensive learning platform for aspiring SQL Database Administrators.</p><span class="lang">HTML</span><p class="code"><a href="https://github.com/fiziya-kc/SQL-DBA-Learning" target="_blank" rel="noopener">View code →</a></p></div>
-<div class="repo"><h3><a href="https://fiziya-kc.github.io/expense-tracker_2026/" target="_blank" rel="noopener">expense-tracker_2026</a></h3><p>A full-stack expense tracking web app (React client, Node server) — try the live app.</p><span class="lang">JavaScript</span><p class="code"><a href="https://github.com/fiziya-kc/expense-tracker_2026" target="_blank" rel="noopener">View code →</a></p></div>
-<div class="repo"><h3><a href="https://github.com/fiziya-kc/cash-catcher/blob/main/expense_tracker.py" target="_blank" rel="noopener">cash-catcher</a></h3><p>Catch your cash before it runs away! — a Python expense tracker script.</p><span class="lang">Python</span><p class="code"><a href="https://github.com/fiziya-kc/cash-catcher" target="_blank" rel="noopener">View code →</a></p></div>
-<div class="repo"><h3><a href="https://github.com/fiziya-kc/bollywood-movie-analysis/blob/main/bollywood-movie-analysis.py" target="_blank" rel="noopener">bollywood-movie-analysis</a></h3><p>Exploratory analysis of Bollywood movie data with Python.</p><span class="lang">Python</span><p class="code"><a href="https://github.com/fiziya-kc/bollywood-movie-analysis" target="_blank" rel="noopener">View code →</a></p></div>
-<div class="repo"><h3><a href="https://github.com/fiziya-kc/youtube_analysis/blob/main/youtube_analysis_data%20%20(1).ipynb" target="_blank" rel="noopener">youtube_analysis</a></h3><p>Analysis of YouTube data using Python and Jupyter notebooks.</p><span class="lang">Jupyter Notebook</span><p class="code"><a href="https://github.com/fiziya-kc/youtube_analysis" target="_blank" rel="noopener">View code →</a></p></div>
-<div class="repo"><h3><a href="https://github.com/fiziya-kc/Industrial_project" target="_blank" rel="noopener">Industrial_project</a></h3><p>T20 cricket analytics with Power BI dashboards and data preprocessing.</p><span class="lang">Power BI / Python</span><p class="code"><a href="https://github.com/fiziya-kc/Industrial_project" target="_blank" rel="noopener">View code →</a></p></div>
-<div class="repo"><h3><a href="https://github.com/fiziya-kc/GardenGrowthInsights-/blob/main/GardenGrowthInsights_.ipynb" target="_blank" rel="noopener">GardenGrowthInsights-</a></h3><p>Insights from garden growth data using notebooks.</p><span class="lang">Jupyter Notebook</span><p class="code"><a href="https://github.com/fiziya-kc/GardenGrowthInsights-" target="_blank" rel="noopener">View code →</a></p></div>
-<div class="repo"><h3><a href="https://github.com/fiziya-kc/python-ml-data-analytics-guide/blob/main/Conditional%20Statements.ipynb" target="_blank" rel="noopener">python-ml-data-analytics-guide</a></h3><p>A guide to Python for machine learning and data analytics.</p><span class="lang">Jupyter Notebook</span><p class="code"><a href="https://github.com/fiziya-kc/python-ml-data-analytics-guide" target="_blank" rel="noopener">View code →</a></p></div>
-<div class="repo"><h3><a href="https://github.com/fiziya-kc/NumPy-Pandas-Fundamentals/blob/main/NumPy-Pandas-Fundamentals.ipynb" target="_blank" rel="noopener">NumPy-Pandas-Fundamentals</a></h3><p>NumPy and Pandas fundamentals and practice notebooks.</p><span class="lang">Jupyter Notebook</span><p class="code"><a href="https://github.com/fiziya-kc/NumPy-Pandas-Fundamentals" target="_blank" rel="noopener">View code →</a></p></div>
-<div class="repo"><h3><a href="https://github.com/fiziya-kc/PythonDataStructures/blob/main/PythonDataStructures.py" target="_blank" rel="noopener">PythonDataStructures</a></h3><p>Python data structures practice.</p><span class="lang">Python</span><p class="code"><a href="https://github.com/fiziya-kc/PythonDataStructures" target="_blank" rel="noopener">View code →</a></p></div>
-<div class="repo"><h3><a href="https://github.com/fiziya-kc/Python_Basics/blob/main/Basics%20of%20Python%20Programming.%20.ipynb" target="_blank" rel="noopener">Python_Basics</a></h3><p>Python fundamentals in Jupyter notebooks.</p><span class="lang">Jupyter Notebook</span><p class="code"><a href="https://github.com/fiziya-kc/Python_Basics" target="_blank" rel="noopener">View code →</a></p></div>
-<div class="repo"><h3><a href="https://github.com/fiziya-kc/Simple-Expense-Tracker/blob/main/expense_tracker.py" target="_blank" rel="noopener">Simple-Expense-Tracker</a></h3><p>A simple expense tracker written in Python.</p><span class="lang">Python</span><p class="code"><a href="https://github.com/fiziya-kc/Simple-Expense-Tracker" target="_blank" rel="noopener">View code →</a></p></div>
-<div class="repo"><h3><a href="https://fiziya-kc.github.io/JoyfulMoves-Bootstrap/" target="_blank" rel="noopener">JoyfulMoves-Bootstrap</a></h3><p>A moving-company landing page built with Bootstrap.</p><span class="lang">HTML</span><p class="code"><a href="https://github.com/fiziya-kc/JoyfulMoves-Bootstrap" target="_blank" rel="noopener">View code →</a></p></div>
-<div class="repo"><h3><a href="https://fiziya-kc.github.io/fiziya-portfolio/" target="_blank" rel="noopener">fiziya-portfolio</a></h3><p>This site — a single-page portfolio for my SQL Server DBA profile.</p><span class="lang">HTML</span><p class="code"><a href="https://github.com/fiziya-kc/fiziya-portfolio" target="_blank" rel="noopener">View code →</a></p></div>
-</div>
+<section id="projects"><div class="wrap">
+  <span class="kicker">Signature work</span>
+  <h2>Projects</h2>
+  <article class="proj"><h3>Production SQL Server operations</h3><div class="t" style="color:var(--muted);font-size:15px;margin:2px 0 8px">Data Engineer · Corevision Technology</div>
+  <ul class="b">
+  <li>Scheduled maintenance jobs for re-indexing and integrity checks, replacing manual runs.</li>
+  <li>Set up backup, recovery and disaster-recovery procedures for critical systems.</li>
+  <li>Audited permissions and access controls to meet security compliance.</li>
+  </ul></article>
+  <article class="proj"><h3>Santander DAS Programme</h3><div class="t" style="color:var(--muted);font-size:15px;margin:2px 0 8px">Earlier data engineering work · NTT DATA</div>
+  <ul class="b">
+  <li>Led the migration of large datasets from on-premises Hadoop to AWS S3.</li>
+  <li>Wrote scripts to export data from HDFS to Amazon Aurora, with validation steps.</li>
+  <li>Used AWS Glue for transformation, crawler configuration and job management.</li>
+  <li>Processed high-volume data in batches and cleaned up resources after migration.</li>
+  <li>Built Hive tables and queried structured data with Spark SQL.</li>
+  </ul></article>
 </div></section>
 
-<section id="skills"><div class="wrap"><h2>Skills</h2>
-<div class="skills">
-<div><h3>SQL Server administration</h3><div class="chips"><span>Installation</span><span>Configuration</span><span>Backup and recovery</span><span>Disaster recovery</span><span>High availability</span><span>Performance tuning</span></div></div>
-<div><h3>Maintenance and automation</h3><div class="chips"><span>T-SQL</span><span>Re-indexing</span><span>Integrity checks</span><span>Batch jobs</span><span>Bash</span><span>Python</span></div></div>
-<div><h3>Security and compliance</h3><div class="chips"><span>Access control</span><span>Permission audits</span><span>ITIL</span><span>Incident and change management</span></div></div>
-<div><h3>Monitoring and platforms</h3><div class="chips"><span>Native SQL Server tools</span><span>AWS CloudWatch</span><span>AWS RDS, EC2, IAM</span><span>Linux</span><span>Windows</span></div></div>
-<div><h3>Other databases</h3><div class="chips"><span>Oracle</span><span>PostgreSQL</span></div></div>
-<div><h3>Data engineering background</h3><div class="chips"><span>SSIS</span><span>IICS</span><span>Airflow</span><span>AWS Glue</span><span>Azure Data Factory</span><span>Hadoop, Hive, Spark</span></div></div>
-<div><h3>Tools</h3><div class="chips"><span>JIRA</span><span>GitHub</span><span>GitLab</span><span>Azure DevOps</span><span>Confluence</span></div></div>
-</div></div></section>
+<section id="github"><div class="wrap">
+  <span class="kicker">Proof, not promises</span>
+  <h2>GitHub Projects</h2>
+  <p class="sub">Everything I build and learn, straight from my <a href="https://github.com/fiziya-kc" target="_blank" rel="noopener">GitHub</a>. Filter by the lane it belongs to — click a card to open the live project or the rendered code.</p>
+  <div class="filters" role="group" aria-label="Filter projects">
+    <button class="chip on" data-filter="all" type="button">All</button>
+    <button class="chip" data-filter="dba" type="button">🗄️ DBA</button>
+    <button class="chip" data-filter="data" type="button">📊 Data Analytics</button>
+    <button class="chip" data-filter="ai" type="button">🤖 AI &amp; ML</button>
+    <button class="chip" data-filter="web" type="button">🌐 Web &amp; Apps</button>
+  </div>
+  <div class="repos">
+    <div class="repo" data-tag="dba" data-tilt><h3><a href="https://fiziya-kc.github.io/SQL-DBA-Learning/" target="_blank" rel="noopener">SQL-DBA-Learning</a></h3><p>A comprehensive learning platform for aspiring SQL Database Administrators.</p><div class="meta"><span class="tag t-dba">DBA</span><span class="code"><a href="https://github.com/fiziya-kc/SQL-DBA-Learning" target="_blank" rel="noopener">View code →</a></span></div></div>
+    <div class="repo" data-tag="web" data-tilt><h3><a href="https://fiziya-kc.github.io/expense-tracker_2026/" target="_blank" rel="noopener">expense-tracker_2026</a></h3><p>A full-stack expense tracking web app (React client, Node server) — try the live app.</p><div class="meta"><span class="tag t-web">Web &amp; Apps</span><span class="code"><a href="https://github.com/fiziya-kc/expense-tracker_2026" target="_blank" rel="noopener">View code →</a></span></div></div>
+    <div class="repo" data-tag="data" data-tilt><h3><a href="https://github.com/fiziya-kc/cash-catcher/blob/main/expense_tracker.py" target="_blank" rel="noopener">cash-catcher</a></h3><p>Catch your cash before it runs away! — a Python expense tracker script.</p><div class="meta"><span class="tag t-data">Data Analytics</span><span class="code"><a href="https://github.com/fiziya-kc/cash-catcher" target="_blank" rel="noopener">View code →</a></span></div></div>
+    <div class="repo" data-tag="data" data-tilt><h3><a href="https://github.com/fiziya-kc/bollywood-movie-analysis/blob/main/bollywood-movie-analysis.py" target="_blank" rel="noopener">bollywood-movie-analysis</a></h3><p>Exploratory analysis of Bollywood movie data with Python.</p><div class="meta"><span class="tag t-data">Data Analytics</span><span class="code"><a href="https://github.com/fiziya-kc/bollywood-movie-analysis" target="_blank" rel="noopener">View code →</a></span></div></div>
+    <div class="repo" data-tag="data" data-tilt><h3><a href="https://github.com/fiziya-kc/youtube_analysis/blob/main/youtube_analysis_data%20%20(1).ipynb" target="_blank" rel="noopener">youtube_analysis</a></h3><p>Analysis of YouTube data using Python and Jupyter notebooks.</p><div class="meta"><span class="tag t-data">Data Analytics</span><span class="code"><a href="https://github.com/fiziya-kc/youtube_analysis" target="_blank" rel="noopener">View code →</a></span></div></div>
+    <div class="repo" data-tag="data" data-tilt><h3><a href="https://github.com/fiziya-kc/Industrial_project" target="_blank" rel="noopener">Industrial_project</a></h3><p>T20 cricket analytics with Power BI dashboards and data preprocessing.</p><div class="meta"><span class="tag t-data">Data Analytics</span><span class="code"><a href="https://github.com/fiziya-kc/Industrial_project" target="_blank" rel="noopener">View code →</a></span></div></div>
+    <div class="repo" data-tag="data" data-tilt><h3><a href="https://github.com/fiziya-kc/GardenGrowthInsights-/blob/main/GardenGrowthInsights_.ipynb" target="_blank" rel="noopener">GardenGrowthInsights-</a></h3><p>Insights from garden growth data using notebooks.</p><div class="meta"><span class="tag t-data">Data Analytics</span><span class="code"><a href="https://github.com/fiziya-kc/GardenGrowthInsights-" target="_blank" rel="noopener">View code →</a></span></div></div>
+    <div class="repo" data-tag="ai" data-tilt><h3><a href="https://github.com/fiziya-kc/python-ml-data-analytics-guide/blob/main/Conditional%20Statements.ipynb" target="_blank" rel="noopener">python-ml-data-analytics-guide</a></h3><p>A guide to Python for machine learning and data analytics.</p><div class="meta"><span class="tag t-ai">AI &amp; ML</span><span class="code"><a href="https://github.com/fiziya-kc/python-ml-data-analytics-guide" target="_blank" rel="noopener">View code →</a></span></div></div>
+    <div class="repo" data-tag="data" data-tilt><h3><a href="https://github.com/fiziya-kc/NumPy-Pandas-Fundamentals/blob/main/NumPy-Pandas-Fundamentals.ipynb" target="_blank" rel="noopener">NumPy-Pandas-Fundamentals</a></h3><p>NumPy and Pandas fundamentals and practice notebooks.</p><div class="meta"><span class="tag t-data">Data Analytics</span><span class="code"><a href="https://github.com/fiziya-kc/NumPy-Pandas-Fundamentals" target="_blank" rel="noopener">View code →</a></span></div></div>
+    <div class="repo" data-tag="data" data-tilt><h3><a href="https://github.com/fiziya-kc/PythonDataStructures/blob/main/PythonDataStructures.py" target="_blank" rel="noopener">PythonDataStructures</a></h3><p>Python data structures practice.</p><div class="meta"><span class="tag t-data">Data Analytics</span><span class="code"><a href="https://github.com/fiziya-kc/PythonDataStructures" target="_blank" rel="noopener">View code →</a></span></div></div>
+    <div class="repo" data-tag="ai" data-tilt><h3><a href="https://github.com/fiziya-kc/Python_Basics/blob/main/Basics%20of%20Python%20Programming.%20.ipynb" target="_blank" rel="noopener">Python_Basics</a></h3><p>Python fundamentals in Jupyter notebooks.</p><div class="meta"><span class="tag t-ai">AI &amp; ML</span><span class="code"><a href="https://github.com/fiziya-kc/Python_Basics" target="_blank" rel="noopener">View code →</a></span></div></div>
+    <div class="repo" data-tag="data" data-tilt><h3><a href="https://github.com/fiziya-kc/Simple-Expense-Tracker/blob/main/expense_tracker.py" target="_blank" rel="noopener">Simple-Expense-Tracker</a></h3><p>A simple expense tracker written in Python.</p><div class="meta"><span class="tag t-data">Data Analytics</span><span class="code"><a href="https://github.com/fiziya-kc/Simple-Expense-Tracker" target="_blank" rel="noopener">View code →</a></span></div></div>
+    <div class="repo" data-tag="web" data-tilt><h3><a href="https://fiziya-kc.github.io/JoyfulMoves-Bootstrap/" target="_blank" rel="noopener">JoyfulMoves-Bootstrap</a></h3><p>A moving-company landing page built with Bootstrap.</p><div class="meta"><span class="tag t-web">Web &amp; Apps</span><span class="code"><a href="https://github.com/fiziya-kc/JoyfulMoves-Bootstrap" target="_blank" rel="noopener">View code →</a></span></div></div>
+    <div class="repo" data-tag="web" data-tilt><h3><a href="https://fiziya-kc.github.io/fiziya-portfolio/" target="_blank" rel="noopener">fiziya-portfolio</a></h3><p>This site — a 3D single-page portfolio for my DBA × Data × AI profile.</p><div class="meta"><span class="tag t-web">Web &amp; Apps</span><span class="code"><a href="https://github.com/fiziya-kc/fiziya-portfolio" target="_blank" rel="noopener">View code →</a></span></div></div>
+  </div>
+</div></section>
 
-<section id="education"><div class="wrap"><h2>Education</h2>
-<div class="edu">
-<div><h3>Master of Computer Applications</h3><p>Chandigarh University, Chandigarh</p><p>Graduated May 2024</p></div>
-<div><h3>Bachelor of Science</h3><p>KLE University, Belgaum</p><p>Graduated May 2021</p></div>
-</div></div></section>
+<section id="skills"><div class="wrap">
+  <span class="kicker">The toolkit</span>
+  <h2>Skills</h2>
+  <div class="skills">
+  <div><h3 class="c-dba">🗄️ SQL Server administration</h3><div class="chips"><span>Installation</span><span>Configuration</span><span>Backup and recovery</span><span>Disaster recovery</span><span>High availability</span><span>Performance tuning</span></div></div>
+  <div><h3 class="c-dba">Maintenance and automation</h3><div class="chips"><span>T-SQL</span><span>Re-indexing</span><span>Integrity checks</span><span>Batch jobs</span><span>Bash</span><span>Python</span></div></div>
+  <div><h3 class="c-dba">Security and compliance</h3><div class="chips"><span>Access control</span><span>Permission audits</span><span>ITIL</span><span>Incident and change management</span></div></div>
+  <div><h3 class="c-data">📊 Data engineering &amp; analytics</h3><div class="chips"><span>SSIS</span><span>IICS</span><span>Airflow</span><span>AWS Glue</span><span>Azure Data Factory</span><span>Hadoop, Hive, Spark</span><span>Power BI</span></div></div>
+  <div><h3 class="c-data">Analysis stack</h3><div class="chips"><span>Python</span><span>NumPy</span><span>Pandas</span><span>Matplotlib</span><span>Seaborn</span><span>SQL</span></div></div>
+  <div><h3 class="c-ai">🤖 AI &amp; ML</h3><div class="chips"><span>Machine learning</span><span>scikit-learn</span><span>Jupyter</span><span>AI-assisted workflows</span><span>Prompting</span></div></div>
+  <div><h3 class="c-gen">Monitoring and platforms</h3><div class="chips"><span>Native SQL Server tools</span><span>AWS CloudWatch</span><span>AWS RDS, EC2, IAM</span><span>Linux</span><span>Windows</span><span>Oracle</span><span>PostgreSQL</span></div></div>
+  <div><h3 class="c-gen">Tools</h3><div class="chips"><span>JIRA</span><span>GitHub</span><span>GitLab</span><span>Azure DevOps</span><span>Confluence</span></div></div>
+  </div>
+</div></section>
+
+<section id="education"><div class="wrap">
+  <h2>Education</h2>
+  <div class="edu">
+  <div><h3>Master of Computer Applications</h3><p>Chandigarh University, Chandigarh</p><p>Graduated May 2024</p></div>
+  <div><h3>Bachelor of Science</h3><p>KLE University, Belgaum</p><p>Graduated May 2021</p></div>
+  </div>
+</div></section>
 
 <footer id="contact"><div class="wrap">
-<h2>Need a dependable SQL Server team member?</h2>
-<p class="lead">Based in India. Open to SQL Server DBA roles.</p>
-<p class="mail"><span id="em">fiziyachuhe@gmail.com</span></p>
-<p class="links">Phone: +91 99728 12057<br><a href="https://www.linkedin.com/in/fiziya-chuhe-3582041b5/" target="_blank" rel="noopener">linkedin.com/in/fiziya-chuhe-3582041b5</a></p>
-<button class="btn" id="cp" type="button">Copy email address</button>
-<a class="alt" href="mailto:fiziyachuhe@gmail.com" target="_blank" rel="noopener">Open in mail app</a>
-<p class="hint" id="msg" role="status"></p>
+  <h2>Need someone who speaks database, data and AI?</h2>
+  <p class="lead">Based in India. Open to SQL Server DBA and data roles.</p>
+  <p class="mail"><span id="em">fiziyachuhe@gmail.com</span></p>
+  <p class="links">Phone: +91 99728 12057<br><a href="https://www.linkedin.com/in/fiziya-chuhe-3582041b5/" target="_blank" rel="noopener">linkedin.com/in/fiziya-chuhe-3582041b5</a></p>
+  <button class="btn" id="cp" type="button">Copy email address</button>
+  <a class="alt" href="mailto:fiziyachuhe@gmail.com" target="_blank" rel="noopener">Open in mail app</a>
+  <p class="hint" id="msg" role="status"></p>
 </div></footer>
+
 <script>
 (function(){
-var b=document.getElementById('cp'),m=document.getElementById('msg'),t=document.getElementById('em');
-function done(ok){m.textContent=ok?'Email address copied.':'Press and hold the address above to copy it.';}
-b.addEventListener('click',function(){
-var a='fiziyachuhe@gmail.com';
-if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(a).then(function(){done(true)},fallback);}else{fallback();}
-function fallback(){try{var r=document.createRange();r.selectNodeContents(t);var s=window.getSelection();s.removeAllRanges();s.addRange(r);done(document.execCommand('copy'));}catch(e){done(false);}}
-});
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // 3D tilt for cards
+  if (!reduced && window.matchMedia('(hover:hover)').matches) {
+    document.querySelectorAll('[data-tilt]').forEach(function(card){
+      card.addEventListener('mousemove', function(e){
+        var r = card.getBoundingClientRect();
+        var x = (e.clientX - r.left) / r.width - .5;
+        var y = (e.clientY - r.top) / r.height - .5;
+        card.style.transform = 'rotateY(' + (x*10).toFixed(2) + 'deg) rotateX(' + (-y*10).toFixed(2) + 'deg) translateZ(8px)';
+      });
+      card.addEventListener('mouseleave', function(){
+        card.style.transform = '';
+      });
+    });
+
+    // hero scene follows the cursor
+    var cube = document.getElementById('cube');
+    if (cube) {
+      document.addEventListener('mousemove', function(e){
+        var x = e.clientX / window.innerWidth - .5;
+        var y = e.clientY / window.innerHeight - .5;
+        cube.style.transform = 'rotateY(' + (x*14).toFixed(2) + 'deg) rotateX(' + (-y*10).toFixed(2) + 'deg)';
+      });
+    }
+  }
+
+  // project filters
+  var chips = document.querySelectorAll('.chip');
+  chips.forEach(function(chip){
+    chip.addEventListener('click', function(){
+      chips.forEach(function(c){ c.classList.remove('on'); });
+      chip.classList.add('on');
+      var f = chip.getAttribute('data-filter');
+      document.querySelectorAll('.repo').forEach(function(card){
+        card.classList.toggle('hide', f !== 'all' && card.getAttribute('data-tag') !== f);
+      });
+    });
+  });
+
+  // copy email
+  var b=document.getElementById('cp'),m=document.getElementById('msg'),t=document.getElementById('em');
+  function done(ok){m.textContent=ok?'Email address copied.':'Press and hold the address above to copy it.';}
+  b.addEventListener('click',function(){
+    var a='fiziyachuhe@gmail.com';
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(a).then(function(){done(true)},fallback);}else{fallback();}
+    function fallback(){try{var r=document.createRange();r.selectNodeContents(t);var s=window.getSelection();s.removeAllRanges();s.addRange(r);done(document.execCommand('copy'));}catch(e){done(false);}}
+  });
 })();
 </script>
 </body>
